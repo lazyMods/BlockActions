@@ -4,6 +4,7 @@ import com.lazynessmind.blockactions.BlockActions;
 import com.lazynessmind.blockactions.actions.breakaction.BreakerTileEntity;
 import com.lazynessmind.blockactions.actions.hitaction.HitTileEntity;
 import com.lazynessmind.blockactions.actions.placeaction.PlacerTileEntity;
+import com.lazynessmind.blockactions.actions.planteraction.PlanterTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -21,4 +22,7 @@ public class TileEntityRegister {
 
     public static final RegistryObject<TileEntityType<HitTileEntity>> HIT_TILE = TILES.register("hit", () ->
             TileEntityType.Builder.create(HitTileEntity::new, BlockRegister.HIT.get()).build(null));
+
+    public static final RegistryObject<TileEntityType<PlanterTileEntity>> PLANTER_TILE = TILES.register("planter", () ->
+            TileEntityType.Builder.create(PlanterTileEntity::new, BlockRegister.PLANTER.get()).build(null));
 }
