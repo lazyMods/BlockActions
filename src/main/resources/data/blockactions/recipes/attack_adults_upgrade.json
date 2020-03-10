@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "CCC",
-    "CRC",
-    "CSC"
+    "OEO",
+    "ERE",
+    "OEO"
   ],
   "key": {
-    "C": {
-      "item": "minecraft:cobblestone"
+    "O": {
+      "item": "minecraft:obsidian"
     },
     "R": {
       "item": "minecraft:redstone_block"
     },
-    "S": {
-      "item": "minecraft:diamond_sword"
+    "E": {
+      "item": "minecraft:egg"
     }
   },
   "result": {
-    "item": "blockactions:hit"
+    "item": "blockactions:attack_adults_upgrade"
   }
 }

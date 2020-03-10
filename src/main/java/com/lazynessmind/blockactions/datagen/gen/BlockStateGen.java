@@ -19,5 +19,6 @@ public class BlockStateGen extends BlockStateProvider {
         horizontalBlock(BlockRegister.BREAKER.get(), new ModelFile.UncheckedModelFile(new ResourceLocation(modid, "block/breaker")));
         horizontalBlock(BlockRegister.PLACER.get(), new ModelFile.UncheckedModelFile(new ResourceLocation(modid, "block/placer")));
         horizontalBlock(BlockRegister.HIT.get(), new ModelFile.UncheckedModelFile(new ResourceLocation(modid, "block/hit")));
+        horizontalBlock(BlockRegister.PLANTER.get(), new ModelFile.UncheckedModelFile(new ResourceLocation(modid, "block/planter")));
     }
 }
