@@ -2,7 +2,7 @@ package com.lazynessmind.blockactions.items;
 
 import com.lazynessmind.blockactions.Configs;
 import com.lazynessmind.blockactions.base.BlockActionBase;
-import com.lazynessmind.blockactions.base.BlockActionTileEntityBase;
+import com.lazynessmind.blockactions.base.BlockActionTileEntity;
 import com.lazynessmind.blockactions.base.ModItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -10,6 +10,8 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public abstract class UpgradeItem extends ModItem {
 
@@ -25,8 +27,8 @@ public abstract class UpgradeItem extends ModItem {
         if (!world.isRemote) {
             if (world.getBlockState(pos).getBlock() instanceof BlockActionBase) {
                 if (world.getBlockState(pos).hasTileEntity()) {
-                    if (world.getTileEntity(pos) instanceof BlockActionTileEntityBase) {
-                        BlockActionTileEntityBase tileEntityBase = (BlockActionTileEntityBase) world.getTileEntity(pos);
+                    if (world.getTileEntity(pos) instanceof BlockActionTileEntity) {
+                        BlockActionTileEntity tileEntityBase = (BlockActionTileEntity) world.getTileEntity(pos);
                         if (tileEntityBase != null) {
                             if (tileEntityBase.getCurrentUpgrades() < Configs.MAX_UPGRADE_COUNT.get()) {
                                 ApplyState applyState = this.applyUpgrade(tileEntityBase);
@@ -34,6 +36,7 @@ public abstract class UpgradeItem extends ModItem {
                                     tileEntityBase.currentUpgrades++;
                                     tileEntityBase.getUpgradeItems().add(applyState.getAppliedUpg());
                                     context.getItem().shrink(1);
+                                    tileEntityBase.increaseEnergyCost(applyState.getUpgradeCost());
                                 }
                             }
                         }
@@ -44,18 +47,20 @@ public abstract class UpgradeItem extends ModItem {
         return super.onItemUse(context);
     }
 
-    public abstract ApplyState applyUpgrade(BlockActionTileEntityBase tileEntityBase);
+    public abstract ApplyState applyUpgrade(BlockActionTileEntity tileEntityBase);
 
     public static class ApplyState {
 
         private ItemStack appliedUpg;
         private boolean result;
+        private int upgradeCost;
 
-        public static final ApplyState FAIL = new ApplyState(null, false);
+        public static final ApplyState FAIL = new ApplyState(null, false, 0);
 
-        public ApplyState(ItemStack appliedUpg, boolean result) {
+        public ApplyState(@Nullable ItemStack appliedUpg, boolean result, int upgradeCost) {
             this.appliedUpg = appliedUpg;
             this.result = result;
+            this.upgradeCost = upgradeCost;
         }
 
         public ItemStack getAppliedUpg() {
@@ -64,6 +69,10 @@ public abstract class UpgradeItem extends ModItem {
 
         public boolean getResult() {
             return this.result;
+        }
+
+        public int getUpgradeCost() {
+            return upgradeCost;
         }
     }
 }
