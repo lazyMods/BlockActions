@@ -19,12 +19,15 @@ public class Configs {
 
     public static ForgeConfigSpec.DoubleValue HIT_DAMAGE;
 
+    public static ForgeConfigSpec.IntValue ENERGY_PER_WORK;
+
     static {
         COMMON_BUILDER.comment("MOD: Block Actions");
 
         COMMON_BUILDER.push("Common configs");
         DEFAULT_COOLDOWN = COMMON_BUILDER.comment("Cool Down time in Ticks (20 ticks = 1 second").defineInRange("defaultCoolDown", 60, 20, Integer.MAX_VALUE);
         MAX_UPGRADE_COUNT = COMMON_BUILDER.comment("How much upgrades can the block hold").defineInRange("maxUpgrades", 5, 1, Integer.MAX_VALUE);
+        ENERGY_PER_WORK = COMMON_BUILDER.comment("Amount of energy needed to work.").defineInRange("energy_per_work", 100, 100, Integer.MAX_VALUE);
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.push("Breaker Configs");
