@@ -1,5 +1,6 @@
 package com.lazynessmind.blockactions.items;
 
+import com.lazynessmind.blockactions.actions.hitaction.HitTileEntity;
 import com.lazynessmind.blockactions.base.BlockActionTileEntity;
 import com.lazynessmind.blockactions.utils.Utils;
 import net.minecraft.client.util.ITooltipFlag;
@@ -11,21 +12,23 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SpeedUpgradeItem extends UpgradeItem {
+public class AttackAdultMobsUpgrade extends UpgradeItem {
 
     @Override
     public ApplyState applyUpgrade(BlockActionTileEntity tileEntityBase) {
-        int newCoolDown = tileEntityBase.getCoolDown() / 2;
-        if (newCoolDown > 0 && tileEntityBase.isEnergyMode()) {
-            tileEntityBase.setCoolDown(tileEntityBase.getCoolDown() / 2);
-            return new ApplyState(Utils.asStack(this), true, 200);
+        if(tileEntityBase instanceof HitTileEntity){
+            HitTileEntity hitTileEntity = (HitTileEntity)tileEntityBase;
+            if(!hitTileEntity.attackOnlyAdults){
+                hitTileEntity.attackOnlyAdults = true;
+                return new ApplyState(Utils.asStack(this), true, 0);
+            }
         }
         return ApplyState.FAIL;
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("tooltip.speedupgrade.canapply"));
-        tooltip.add(new TranslationTextComponent("tooltip.speedupgrade.info"));
+        tooltip.add(new TranslationTextComponent("tooltip.attack_adults_upgrade.canapply"));
+        tooltip.add(new TranslationTextComponent("tooltip.attack_adults_upgrade.info"));
     }
 }
