@@ -3,7 +3,7 @@
   "pattern": [
     "CCC",
     "CRC",
-    "CSC"
+    "CHC"
   ],
   "key": {
     "C": {
@@ -12,11 +12,11 @@
     "R": {
       "item": "minecraft:redstone_block"
     },
-    "S": {
-      "item": "minecraft:diamond_sword"
+    "H": {
+      "item": "minecraft:diamond_hoe"
     }
   },
   "result": {
-    "item": "blockactions:hit"
+    "item": "blockactions:planter"
   }
 }
