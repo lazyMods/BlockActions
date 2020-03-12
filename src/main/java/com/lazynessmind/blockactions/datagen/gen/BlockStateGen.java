@@ -10,6 +10,8 @@ import net.minecraftforge.client.model.generators.ModelFile;
 
 public class BlockStateGen extends BlockStateProvider {
 
+    public String modid = BlockActions.MOD_ID;
+
     public BlockStateGen(DataGenerator gen, ExistingFileHelper exFileHelper) {
         super(gen, BlockActions.MOD_ID, exFileHelper);
     }

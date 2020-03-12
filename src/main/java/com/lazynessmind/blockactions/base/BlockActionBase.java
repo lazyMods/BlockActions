@@ -23,6 +23,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.LootContext;
 
 import java.util.List;
@@ -39,8 +40,8 @@ public class BlockActionBase extends ModBlock {
     }
 
     @Override
-    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
-        this.doWork(worldIn, pos, state);
+    public void tick(BlockState state, ServerWorld serverWorld, BlockPos pos, Random rnd) {
+        this.doWork(serverWorld, pos, state);
     }
 
     private void doWork(World world, BlockPos pos, BlockState state){

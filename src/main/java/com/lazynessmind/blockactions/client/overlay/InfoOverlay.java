@@ -51,7 +51,7 @@ public class InfoOverlay {
         int startPosX = width / 2;
         int startPosY = height / 2;
 
-        if (mc.player.isSneaking()) {
+        if (mc.player.isCrouching()) {
             int index = 1;
             for (String key : infoNbt.keySet()) {
                 mc.fontRenderer.drawStringWithShadow(infoNbt.getString(key), startPosX, startPosY + (index * 10), Color.WHITE.getRGB());
