@@ -40,6 +40,17 @@
   
   **0.0.1:**
   * Beta release;
+  
+  **0.0.2:**
+    * Updated Forge to latest version;
+    * Work method was reworked, now works in redstone mode until added a energy upgrade. (See video to understand)
+    * Added new action: Planter;
+    * New upgrade: Mob filter only adult mobs
+    * New upgrade: Energy Mode
+    * New upgrade: Silk Touch Upgrade to the Breaker Action
+    * Fix: All recipes in same group
+    * Fix: Item on hitter not getting damaged
+    * Fix: Breaker respects the vanilla drops
       
 </details>
 
