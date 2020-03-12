@@ -4,7 +4,7 @@ issueTrackerURL="https://www.google.com"
 authors="lazynessmind"
 [[mods]] #mandatory
 modId="blockactions"
-version="0.0.1-1.15.2" #mandatory
+version="0.0.2-1.15.2" #mandatory
 displayName="Block Actions"
 description='''
 Block that reproduce player actions.

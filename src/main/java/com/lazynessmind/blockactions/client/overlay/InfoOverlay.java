@@ -2,15 +2,21 @@ package com.lazynessmind.blockactions.client.overlay;
 
 import com.lazynessmind.blockactions.Configs;
 import com.lazynessmind.blockactions.actions.breakaction.BreakerBlock;
+import com.lazynessmind.blockactions.actions.breakaction.BreakerUtil;
+import com.lazynessmind.blockactions.actions.hitaction.HitBlock;
 import com.lazynessmind.blockactions.actions.placeaction.PlacerBlock;
+import com.lazynessmind.blockactions.actions.placeaction.PlacerUtils;
+import com.lazynessmind.blockactions.actions.planteraction.PlanterBlock;
 import com.lazynessmind.blockactions.base.BlockActionBase;
 import com.lazynessmind.blockactions.client.util.RayTraceUtil;
 import com.lazynessmind.blockactions.net.NetHandler;
 import com.lazynessmind.blockactions.net.msg.GetInfo;
 import com.lazynessmind.blockactions.utils.InvUtils;
+import com.lazynessmind.blockactions.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.item.ItemFrameEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -45,35 +51,50 @@ public class InfoOverlay {
         int startPosX = width / 2;
         int startPosY = height / 2;
 
-        if (mc.player != null) {
-            if (mc.player.isCrouching()) {
-                int index = 1;
-                for (String key : infoNbt.keySet()) {
-                    mc.fontRenderer.drawStringWithShadow(infoNbt.getString(key), startPosX, startPosY + (index * 10), Color.WHITE.getRGB());
-                    index++;
-                }
-            } else {
-                mc.fontRenderer.drawStringWithShadow(new TranslationTextComponent("infooverlay.sneak").getFormattedText(), startPosX, startPosY + 10, Color.GRAY.getRGB());
+        if (mc.player.isSneaking()) {
+            int index = 1;
+            for (String key : infoNbt.keySet()) {
+                mc.fontRenderer.drawStringWithShadow(infoNbt.getString(key), startPosX, startPosY + (index * 10), Color.WHITE.getRGB());
+                index++;
+            }
+        } else {
+            mc.fontRenderer.drawStringWithShadow(new TranslationTextComponent("infooverlay.sneak").getFormattedText(), startPosX, startPosY + 10, Color.GRAY.getRGB());
 
-                String specialCase = "";
-                if (blockActionBase instanceof PlacerBlock) {
-                    if (!InvUtils.hasInvAbove(pos, mc.world)) {
-                        specialCase = new TranslationTextComponent("infooverlay.placer.needchest").getFormattedText();
-                    }
-                } else if (blockActionBase instanceof BreakerBlock) {
-                    BlockPos facingPos = pos.offset(mc.world.getBlockState(pos).get(BlockActionBase.FACING));
-                    BlockState facingState = mc.world.getBlockState(facingPos);
-
-                    if (InvUtils.hasInv(facingPos, mc.world)) {
-                        specialCase = new TranslationTextComponent("infooverlay.breaker.canbreakinv").getFormattedText();
-                    } else if (facingState.hasTileEntity() && !Configs.BREAK_TE.get()) {
-                        specialCase = new TranslationTextComponent("infooverlay.breaker.canbreakte").getFormattedText();
-                    }
+            String specialCase = "";
+            String specialCase2 = "";
+            if (blockActionBase instanceof PlacerBlock) {
+                if (!InvUtils.hasInvAbove(pos, mc.world)) {
+                    specialCase = new TranslationTextComponent("infooverlay.placer.needchest").getFormattedText();
                 }
+            } else if (blockActionBase instanceof BreakerBlock) {
+                BlockPos facingPos = pos.offset(mc.world.getBlockState(pos).get(BlockActionBase.FACING));
+                BlockState facingState = mc.world.getBlockState(facingPos);
 
-                if (!specialCase.isEmpty()) {
-                    mc.fontRenderer.drawSplitString(specialCase, startPosX, startPosY + 20, 100, Color.RED.getRGB());
+                if (InvUtils.hasInv(facingPos, mc.world)) {
+                    specialCase = new TranslationTextComponent("infooverlay.breaker.canbreakinv").getFormattedText();
+                } else if (facingState.hasTileEntity() && !Configs.BREAK_TE.get()) {
+                    specialCase = new TranslationTextComponent("infooverlay.breaker.canbreakte").getFormattedText();
                 }
+            } else if (blockActionBase instanceof HitBlock) {
+                BlockPos facingPos = pos.offset(mc.world.getBlockState(pos).get(BlockActionBase.FACING));
+                if (Utils.getEntitiesInSpace(ItemFrameEntity.class, mc.world, facingPos).size() > 1) {
+                    specialCase = new TranslationTextComponent("infooverlay.hit.morethanone").getFormattedText();
+                }
+            } else if (blockActionBase instanceof PlanterBlock) {
+                if (!Utils.isWater(mc.world, pos.down())) {
+                    specialCase = new TranslationTextComponent("infooverlay.planter.needwater").getFormattedText();
+                }
+                if(!InvUtils.hasInvAbove(pos, mc.world)){
+                    specialCase2 = new TranslationTextComponent("infooverlay.planter.needchest").getFormattedText();
+                }
+            }
+
+            if (!specialCase.isEmpty()) {
+                mc.fontRenderer.drawSplitString(specialCase, startPosX, startPosY + 20, 100, Color.RED.getRGB());
+            }
+            if (!specialCase2.isEmpty()) {
+                int startPos = mc.fontRenderer.listFormattedStringToWidth(specialCase, 100).size() * 20;
+                mc.fontRenderer.drawSplitString(specialCase2, startPosX, startPosY + startPos, 100, Color.RED.getRGB());
             }
         }
     }

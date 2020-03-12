@@ -22,8 +22,12 @@ public class ItemModelGen extends ItemModelProvider {
         parentBlock(BlockRegister.BREAKER.get());
         parentBlock(BlockRegister.PLACER.get());
         parentBlock(BlockRegister.HIT.get());
+        parentBlock(BlockRegister.PLANTER.get());
         simpleItem(ItemRegister.SPEED_UPGRADE.get());
         simpleItem(ItemRegister.ATTACK_UPGRADE.get());
+        simpleItem(ItemRegister.ATTACK_ADULTS_UPGRADE.get());
+        simpleItem(ItemRegister.ENERGY_MODE_UPGRADE.get());
+        simpleItem(ItemRegister.SILK_TOUCH_UPGRADE.get());
     }
 
     private void simpleItem(Item item) {

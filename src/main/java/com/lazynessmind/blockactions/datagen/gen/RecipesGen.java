@@ -1,6 +1,5 @@
 package com.lazynessmind.blockactions.datagen.gen;
 
-import com.lazynessmind.blockactions.BlockActions;
 import com.lazynessmind.blockactions.event.BlockRegister;
 import com.lazynessmind.blockactions.event.ItemRegister;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
@@ -21,6 +20,11 @@ public class RecipesGen extends RecipeProvider {
 
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+        this.blockActions(consumer);
+        this.upgrades(consumer);
+    }
+
+    private void blockActions(Consumer<IFinishedRecipe> consumer){
         ShapedRecipeBuilder.shapedRecipe(BlockRegister.BREAKER.get())
                 .patternLine("CCC")
                 .patternLine("CRC")
@@ -28,7 +32,6 @@ public class RecipesGen extends RecipeProvider {
                 .key('C', Blocks.COBBLESTONE)
                 .key('R', Blocks.REDSTONE_BLOCK)
                 .key('P', Blocks.PISTON)
-                .setGroup(BlockActions.MOD_ID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlockRegister.PLACER.get())
@@ -38,7 +41,6 @@ public class RecipesGen extends RecipeProvider {
                 .key('C', Blocks.COBBLESTONE)
                 .key('R', Blocks.REDSTONE_BLOCK)
                 .key('D', Blocks.DROPPER)
-                .setGroup(BlockActions.MOD_ID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(BlockRegister.HIT.get())
@@ -48,18 +50,28 @@ public class RecipesGen extends RecipeProvider {
                 .key('C', Blocks.COBBLESTONE)
                 .key('R', Blocks.REDSTONE_BLOCK)
                 .key('S', Items.DIAMOND_SWORD)
-                .setGroup(BlockActions.MOD_ID)
                 .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ItemRegister.SPEED_UPGRADE.get())
-                .patternLine("ONO")
-                .patternLine("NRN")
-                .patternLine("ONO")
+        ShapedRecipeBuilder.shapedRecipe(BlockRegister.PLANTER.get())
+                .patternLine("CCC")
+                .patternLine("CRC")
+                .patternLine("CHC")
+                .key('C', Blocks.COBBLESTONE)
+                .key('R', Blocks.REDSTONE_BLOCK)
+                .key('H', Items.DIAMOND_HOE)
+                .addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
+                .build(consumer);
+    }
+
+    private void upgrades(Consumer<IFinishedRecipe> consumer){
+        ShapedRecipeBuilder.shapedRecipe(ItemRegister.ATTACK_ADULTS_UPGRADE.get())
+                .patternLine("OEO")
+                .patternLine("ERE")
+                .patternLine("OEO")
                 .key('O', Blocks.OBSIDIAN)
                 .key('R', Blocks.REDSTONE_BLOCK)
-                .key('N', Items.NETHER_WART)
-                .setGroup(BlockActions.MOD_ID)
-                .addCriterion("obsidian", InventoryChangeTrigger.Instance.forItems(Blocks.OBSIDIAN))
+                .key('E', Items.EGG)
+                .addCriterion("egg", InventoryChangeTrigger.Instance.forItems(Items.EGG))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(ItemRegister.ATTACK_UPGRADE.get())
                 .patternLine("OQO")
@@ -68,9 +80,34 @@ public class RecipesGen extends RecipeProvider {
                 .key('O', Blocks.OBSIDIAN)
                 .key('R', Blocks.REDSTONE_BLOCK)
                 .key('Q', Items.QUARTZ)
-                .setGroup(BlockActions.MOD_ID)
                 .addCriterion("obsidian", InventoryChangeTrigger.Instance.forItems(Blocks.OBSIDIAN))
                 .build(consumer);
-
+        ShapedRecipeBuilder.shapedRecipe(ItemRegister.SPEED_UPGRADE.get())
+                .patternLine("ONO")
+                .patternLine("NRN")
+                .patternLine("ONO")
+                .key('O', Blocks.OBSIDIAN)
+                .key('R', Blocks.REDSTONE_BLOCK)
+                .key('N', Items.NETHER_WART)
+                .addCriterion("obsidian", InventoryChangeTrigger.Instance.forItems(Blocks.OBSIDIAN))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemRegister.ENERGY_MODE_UPGRADE.get())
+                .patternLine("OEO")
+                .patternLine("ERE")
+                .patternLine("OEO")
+                .key('O', Blocks.OBSIDIAN)
+                .key('R', Blocks.REDSTONE_BLOCK)
+                .key('E', Items.ENDER_PEARL)
+                .addCriterion("obsidian", InventoryChangeTrigger.Instance.forItems(Blocks.OBSIDIAN))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ItemRegister.SILK_TOUCH_UPGRADE.get())
+                .patternLine("OEO")
+                .patternLine("ERE")
+                .patternLine("OEO")
+                .key('O', Blocks.OBSIDIAN)
+                .key('R', Blocks.REDSTONE_BLOCK)
+                .key('E', Items.EMERALD)
+                .addCriterion("obsidian", InventoryChangeTrigger.Instance.forItems(Blocks.OBSIDIAN))
+                .build(consumer);
     }
 }

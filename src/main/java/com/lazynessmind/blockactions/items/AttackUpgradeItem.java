@@ -1,7 +1,7 @@
 package com.lazynessmind.blockactions.items;
 
 import com.lazynessmind.blockactions.actions.hitaction.HitTileEntity;
-import com.lazynessmind.blockactions.base.BlockActionTileEntityBase;
+import com.lazynessmind.blockactions.base.BlockActionTileEntity;
 import com.lazynessmind.blockactions.utils.Utils;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -15,11 +15,11 @@ import java.util.List;
 public class AttackUpgradeItem extends UpgradeItem {
 
     @Override
-    public ApplyState applyUpgrade(BlockActionTileEntityBase tileEntityBase) {
+    public ApplyState applyUpgrade(BlockActionTileEntity tileEntityBase) {
         if (tileEntityBase instanceof HitTileEntity) {
             HitTileEntity hitTileEntity = (HitTileEntity) tileEntityBase;
             hitTileEntity.baseDamage++;
-            return new ApplyState(Utils.newStack(this), true);
+            return new ApplyState(Utils.asStack(this), true, 100);
         }
         return ApplyState.FAIL;
     }

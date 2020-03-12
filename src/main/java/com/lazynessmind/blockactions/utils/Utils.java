@@ -2,16 +2,29 @@ package com.lazynessmind.blockactions.utils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
+import java.util.List;
 
 public class Utils {
 
-    public static ItemStack newStack(Item item) {
+    public static ItemStack asStack(Item item) {
         return new ItemStack(item);
+    }
+
+    public static void spawnItem(BlockPos pos, World world, ItemStack stack) {
+        world.addEntity(new ItemEntity(world, pos.getX(), pos.getY() + 1, pos.getZ(), stack));
     }
 
     public static BlockState getStateFromItem(ItemStack item) {
@@ -41,5 +54,13 @@ public class Utils {
             itemStacks.add(ItemStack.read(itemStack));
         }
         return itemStacks;
+    }
+
+    public static <T extends Entity> List<T> getEntitiesInSpace(Class<T> entity, World world, BlockPos facingPos) {
+        return world.getEntitiesWithinAABB(entity, new AxisAlignedBB(facingPos));
+    }
+
+    public static boolean isWater(World world, BlockPos pos) {
+        return world.getBlockState(pos).getBlock() == Blocks.WATER || world.getBlockState(pos).has(BlockStateProperties.WATERLOGGED);
     }
 }

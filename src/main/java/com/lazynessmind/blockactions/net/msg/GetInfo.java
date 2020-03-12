@@ -1,7 +1,7 @@
 package com.lazynessmind.blockactions.net.msg;
 
 import com.lazynessmind.blockactions.net.NetHandler;
-import com.lazynessmind.blockactions.utils.IInfo;
+import com.lazynessmind.blockactions.api.IInfo;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -42,7 +42,7 @@ public class GetInfo {
                     if (entity != null) {
                         if (entity instanceof IInfo) {
                             IInfo iInfo = (IInfo) entity;
-                            ReturnInfo infoMsg = new ReturnInfo(iInfo.getLines(), infoNbtField);
+                            ReturnInfo infoMsg = new ReturnInfo(iInfo.getInfo(), infoNbtField);
                             NetHandler.INSTANCE.sendTo(infoMsg, playerEntity.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
                         }
                     }

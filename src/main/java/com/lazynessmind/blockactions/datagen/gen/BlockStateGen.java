@@ -10,16 +10,15 @@ import net.minecraftforge.client.model.generators.ModelFile;
 
 public class BlockStateGen extends BlockStateProvider {
 
-    private static final String MOD_ID = BlockActions.MOD_ID;
-
     public BlockStateGen(DataGenerator gen, ExistingFileHelper exFileHelper) {
         super(gen, BlockActions.MOD_ID, exFileHelper);
     }
 
     @Override
     protected void registerStatesAndModels() {
-        horizontalBlock(BlockRegister.BREAKER.get(), new ModelFile.UncheckedModelFile(new ResourceLocation(MOD_ID, "block/breaker")));
-        horizontalBlock(BlockRegister.PLACER.get(), new ModelFile.UncheckedModelFile(new ResourceLocation(MOD_ID, "block/placer")));
-        horizontalBlock(BlockRegister.HIT.get(), new ModelFile.UncheckedModelFile(new ResourceLocation(MOD_ID, "block/hit")));
+        horizontalBlock(BlockRegister.BREAKER.get(), new ModelFile.UncheckedModelFile(new ResourceLocation(modid, "block/breaker")));
+        horizontalBlock(BlockRegister.PLACER.get(), new ModelFile.UncheckedModelFile(new ResourceLocation(modid, "block/placer")));
+        horizontalBlock(BlockRegister.HIT.get(), new ModelFile.UncheckedModelFile(new ResourceLocation(modid, "block/hit")));
+        horizontalBlock(BlockRegister.PLANTER.get(), new ModelFile.UncheckedModelFile(new ResourceLocation(modid, "block/planter")));
     }
 }

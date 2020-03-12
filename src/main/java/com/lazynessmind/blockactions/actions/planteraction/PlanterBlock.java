@@ -1,4 +1,4 @@
-package com.lazynessmind.blockactions.actions.breakaction;
+package com.lazynessmind.blockactions.actions.planteraction;
 
 import com.lazynessmind.blockactions.base.BlockActionBase;
 import net.minecraft.block.BlockState;
@@ -12,17 +12,16 @@ import net.minecraft.world.IBlockReader;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BreakerBlock extends BlockActionBase {
+public class PlanterBlock extends BlockActionBase {
 
-    public BreakerBlock() {
-        super("breaker");
+    public PlanterBlock() {
+        super("planter");
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltips, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltips, flagIn);
-        tooltips.add(new TranslationTextComponent("tooltip.breaker.action"));
-        tooltips.add(new TranslationTextComponent("tooltip.breaker.tip"));
+    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        tooltip.add(new TranslationTextComponent("tooltip.planter.action"));
     }
 
     @Override
@@ -33,6 +32,6 @@ public class BreakerBlock extends BlockActionBase {
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new BreakerTileEntity();
+        return new PlanterTileEntity();
     }
 }

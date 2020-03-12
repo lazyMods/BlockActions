@@ -11,21 +11,20 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SpeedUpgradeItem extends UpgradeItem {
+public class EnergyModeUpgrade extends UpgradeItem {
 
     @Override
     public ApplyState applyUpgrade(BlockActionTileEntity tileEntityBase) {
-        int newCoolDown = tileEntityBase.getCoolDown() / 2;
-        if (newCoolDown > 0 && tileEntityBase.isEnergyMode()) {
-            tileEntityBase.setCoolDown(tileEntityBase.getCoolDown() / 2);
-            return new ApplyState(Utils.asStack(this), true, 200);
+        if(!tileEntityBase.isEnergyMode()){
+            tileEntityBase.setEnergyMode(true);
+            return new ApplyState(Utils.asStack(this), true, 0);
         }
         return ApplyState.FAIL;
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(new TranslationTextComponent("tooltip.speedupgrade.canapply"));
-        tooltip.add(new TranslationTextComponent("tooltip.speedupgrade.info"));
+        tooltip.add(new TranslationTextComponent("tooltip.energymodeupgrade.canapply"));
+        tooltip.add(new TranslationTextComponent("tooltip.energymodeupgrade.info"));
     }
 }
