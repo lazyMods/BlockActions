@@ -3,6 +3,7 @@ package com.lazynessmind.blockactions.utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
@@ -14,6 +15,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
@@ -62,5 +65,10 @@ public class Utils {
 
     public static boolean isWater(World world, BlockPos pos) {
         return world.getBlockState(pos).getBlock() == Blocks.WATER || world.getBlockState(pos).has(BlockStateProperties.WATERLOGGED);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void renderItem(ItemStack stack, int xPos, int yPos){
+        Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(stack, xPos, yPos);
     }
 }

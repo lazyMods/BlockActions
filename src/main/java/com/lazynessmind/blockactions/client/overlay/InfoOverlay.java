@@ -8,7 +8,9 @@ import com.lazynessmind.blockactions.actions.placeaction.PlacerBlock;
 import com.lazynessmind.blockactions.actions.placeaction.PlacerUtils;
 import com.lazynessmind.blockactions.actions.planteraction.PlanterBlock;
 import com.lazynessmind.blockactions.base.BlockActionBase;
+import com.lazynessmind.blockactions.base.BlockActionTileEntity;
 import com.lazynessmind.blockactions.client.util.RayTraceUtil;
+import com.lazynessmind.blockactions.event.ItemRegister;
 import com.lazynessmind.blockactions.net.NetHandler;
 import com.lazynessmind.blockactions.net.msg.GetInfo;
 import com.lazynessmind.blockactions.utils.InvUtils;
@@ -17,7 +19,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.ItemFrameEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -54,9 +58,14 @@ public class InfoOverlay {
         if (mc.player.isSneaking()) {
             int index = 1;
             for (String key : infoNbt.keySet()) {
-                mc.fontRenderer.drawStringWithShadow(infoNbt.getString(key), startPosX, startPosY + (index * 10), Color.WHITE.getRGB());
-                index++;
+                if(!key.equals("Upgrades")){
+                    mc.fontRenderer.drawStringWithShadow(infoNbt.getString(key), startPosX, startPosY + (index * 10), Color.WHITE.getRGB());
+                    index++;
+                }
             }
+
+            renderUpgrades(infoNbt, width, height);
+
         } else {
             mc.fontRenderer.drawStringWithShadow(new TranslationTextComponent("infooverlay.sneak").getFormattedText(), startPosX, startPosY + 10, Color.GRAY.getRGB());
 
@@ -98,4 +107,19 @@ public class InfoOverlay {
             }
         }
     }
+
+    private static void renderUpgrades(CompoundNBT infoNbt, int width, int height) {
+        int startPosX = width / 2;
+        int startPosY = height / 2;
+
+
+        NonNullList<ItemStack> upgrades = Utils.loadListNbt("Upgrades", infoNbt);
+        mc.fontRenderer.drawStringWithShadow(new TranslationTextComponent("infooverlay.upgrades").appendText(upgrades.size() + "/" + Configs.MAX_UPGRADE_COUNT.get()).getFormattedText(), startPosX, startPosY - 30, Color.WHITE.getRGB());
+        int index = 0;
+        for(ItemStack stack : upgrades){
+            Utils.renderItem(stack, startPosX + (index * 20), startPosY-20);
+            index++;
+        }
+    }
+
 }

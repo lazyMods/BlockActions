@@ -159,15 +159,16 @@ public abstract class BlockActionTileEntity extends TileEntity implements ITicka
     @Override
     public CompoundNBT getInfo() {
         CompoundNBT info = new CompoundNBT();
-
-        info.putString("currentUpgrades", new TranslationTextComponent("infooverlay.upgrades").appendText(this.getCurrentUpgrades() + "/" + Configs.MAX_UPGRADE_COUNT.get()).getFormattedText());
-
+        
         if (this.isEnergyMode()) {
             info.putString("energyCost", new TranslationTextComponent("infooverlay.energycost").appendText(String.valueOf(this.getEnergyCost())).getFormattedText());
             info.putString("energy", new TranslationTextComponent("infooverlay.energy").appendText(this.energyManager.toString()).getFormattedText());
             info.putString("cooldown", new TranslationTextComponent("infooverlay.cooldown").appendText(Utils.convertTickSec(this.getCoolDown())).getFormattedText());
             info.putString("workTime", new TranslationTextComponent("infooverlay.worktime").appendText("" + Math.max(this.getWorkTime(), 0)).getFormattedText());
         }
+
+        Utils.saveListToNbt(TAG_UPGRADES, info, this.upgradeItems);
+
         return info;
     }
 }
