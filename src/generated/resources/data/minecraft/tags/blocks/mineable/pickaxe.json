@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "blockactions:item_user",
+    "blockactions:placer",
+    "blockactions:breaker"
+  ]
+}

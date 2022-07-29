@@ -19,8 +19,9 @@ build
 
 # other
 eclipse
-run
-src/generated
+runClient
+runData
+runServer
 todo.txt
 local.properties
 

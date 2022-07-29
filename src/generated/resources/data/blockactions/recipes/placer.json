@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "BCB",
+    "BDB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:cobbled_deepslate"
+    },
+    "C": {
+      "item": "blockactions:core"
+    },
+    "D": {
+      "item": "minecraft:dropper"
+    }
+  },
+  "result": {
+    "item": "blockactions:placer"
+  }
+}

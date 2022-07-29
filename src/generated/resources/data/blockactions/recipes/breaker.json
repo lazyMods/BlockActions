@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "BCB",
+    "BPB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:cobbled_deepslate"
+    },
+    "C": {
+      "item": "blockactions:core"
+    },
+    "P": {
+      "item": "minecraft:golden_pickaxe"
+    }
+  },
+  "result": {
+    "item": "blockactions:breaker"
+  }
+}

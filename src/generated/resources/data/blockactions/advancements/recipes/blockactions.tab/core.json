@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "blockactions:core"
+    ]
+  },
+  "criteria": {
+    "coal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:coal"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "blockactions:core"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "coal",
+      "has_the_recipe"
+    ]
+  ]
+}

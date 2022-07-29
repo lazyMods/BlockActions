@@ -1,110 +1,34 @@
 buildscript {
-    repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-    }
+    apply from: 'https://moddingx.github.io/ModUtils/v4/buildscript.gradle', to: buildscript
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
 
-version = "${mod_version}-${minecraft_version}"
-group = 'com.lazynessmind.blockactions'
-archivesBaseName = 'blockactions'
+apply from: 'https://moddingx.github.io/ModUtils/v4/mod.gradle'
+apply plugin: 'org.moddingx.modgradle.mapping'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+task replaceResources(type: Copy) {
+    outputs.upToDateWhen { false }
+    from(sourceSets.main.resources.srcDirs) {
+        include 'META-INF/mods.toml'
+        expand 'version': base_version, 'mc_version': minecraft_version_range, 'forge_version': forge_version_range
+    }
+    into "$buildDir/resources/main"
+}
 
-minecraft {
-    mappings channel: "${mcp_channel}", version: "${mcp_version}"
+processResources {
+    duplicatesStrategy(DuplicatesStrategy.INCLUDE)
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'META-INF/mods.toml'
+    }
+    finalizedBy replaceResources
+}
 
-    runs {
-        client {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                blockactions {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                blockactions {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-            args '--mod', 'blockactions', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
-            environment 'target', 'fmluserdevdata'
-
-            mods {
-                blockactions {
-                    source sourceSets.main
-                }
-            }
-        }
+repositories {
+    maven {
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
     }
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
 }
-
-jar {
-    manifest {
-        attributes([
-            "Specification-Title": "blockactions",
-            "Specification-Vendor": "lazynessmind",
-            "Specification-Version": "1",
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"lazynessmind",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
-    }
-}
-
-def reobfFile = file("$buildDir/reobfJar/output.jar")
-def reobfArtifact = artifacts.add('default', reobfFile) {
-    type 'jar'
-    builtBy 'reobfJar'
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact reobfArtifact
-        }
-    }
-    repositories {
-        maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
-        }
-    }
-}
-
-//Used to copy the generated data on runData
-task copyGeneratedData(type: Copy) {
-    from("src/generated/resources") {
-        include "assets/**"
-        include "data/**"
-    }
-    into "src/main/resources/"
-}
-

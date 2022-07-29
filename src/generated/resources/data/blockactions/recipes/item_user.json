@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BDB",
+    "BCB",
+    "BFB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:cobbled_deepslate"
+    },
+    "C": {
+      "item": "blockactions:core"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "F": {
+      "item": "minecraft:dropper"
+    }
+  },
+  "result": {
+    "item": "blockactions:item_user"
+  }
+}

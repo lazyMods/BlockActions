@@ -1,0 +1,17 @@
+{
+  "block.blockactions.breaker": "\u00A76Breaker",
+  "block.blockactions.item_user": "\u00A76Item User",
+  "block.blockactions.placer": "\u00A76Placer",
+  "item.blockactions.core": "\u00A76Core",
+  "itemGroup.blockactions.tab": "Block Actions",
+  "tooltip.breaker.action": "\u00A72\u00A7lAction: \u00A7rBreak blocks",
+  "tooltip.breaker.tip": "\u00A72\u00A7lTip: \u00A7rThe breaker will automatically transfer the destroyed block if has an inventory above.",
+  "tooltip.item_user.action": "\u00A72\u00A7lAction: \u00A7rTakes a given item and uses it on the facing block.",
+  "tooltip.item_user.info": "\u00A72\u00A7lInfo: \u00A7r",
+  "tooltip.item_user.optional.four": "- You can also use this as a item user and left-clicker, if the block in front supports both.",
+  "tooltip.item_user.optional.one": "- Place a container with items to be used as an Item Clicker.",
+  "tooltip.item_user.optional.three": "- If the Item User doesn't have a container above it can be used as a left-clicker.",
+  "tooltip.item_user.optional.two": "- Place a container with blocks to be used as an Block Placer, or use the block on the block in front.",
+  "tooltip.placer.action": "\u00A72\u00A7lAction: \u00A7rPlace blocks",
+  "tooltip.placer.requires": "\u00A72\u00A7lRequires: \u00A7rContainer with block above the Placer"
+}
